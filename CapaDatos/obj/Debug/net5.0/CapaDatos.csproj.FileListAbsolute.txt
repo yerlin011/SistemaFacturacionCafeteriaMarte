@@ -1,0 +1,12 @@
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\bin\Debug\net5.0\CapaDatos.deps.json
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\bin\Debug\net5.0\CapaDatos.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\bin\Debug\net5.0\ref\CapaDatos.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\bin\Debug\net5.0\CapaDatos.pdb
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.AssemblyInfoInputs.cache
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.AssemblyInfo.cs
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.csproj.CoreCompileInputs.cache
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\ref\CapaDatos.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.pdb
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaDatos\obj\Debug\net5.0\CapaDatos.csproj.AssemblyReference.cache

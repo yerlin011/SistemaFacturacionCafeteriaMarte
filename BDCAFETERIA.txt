@@ -1,0 +1,889 @@
+USE [master]
+GO
+/****** Object:  Database [DBCAFETERIA]    Script Date: 9/12/2021 4:50:55 PM ******/
+CREATE DATABASE [DBCAFETERIA]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'DBCAFETERIA', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\DBCAFETERIA.mdf' , SIZE = 3264KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'DBCAFETERIA_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\DATA\DBCAFETERIA_log.ldf' , SIZE = 832KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [DBCAFETERIA] SET COMPATIBILITY_LEVEL = 120
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [DBCAFETERIA].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [DBCAFETERIA] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [DBCAFETERIA] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [DBCAFETERIA] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [DBCAFETERIA] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [DBCAFETERIA] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [DBCAFETERIA] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [DBCAFETERIA] SET  MULTI_USER 
+GO
+ALTER DATABASE [DBCAFETERIA] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [DBCAFETERIA] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [DBCAFETERIA] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [DBCAFETERIA] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+ALTER DATABASE [DBCAFETERIA] SET DELAYED_DURABILITY = DISABLED 
+GO
+USE [DBCAFETERIA]
+GO
+/****** Object:  Table [dbo].[ARTICULO]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ARTICULO](
+	[IdArticulo] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [nvarchar](50) NULL,
+	[Precio] [decimal](18, 0) NULL,
+	[Stock] [int] NULL,
+	[Estado] [bit] NULL,
+ CONSTRAINT [PK_ARTICULO] PRIMARY KEY CLUSTERED 
+(
+	[IdArticulo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[CLIENTE]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CLIENTE](
+	[IdCliente] [int] IDENTITY(1,1) NOT NULL,
+	[NombreCompleto] [nvarchar](50) NULL,
+	[Direccion] [nvarchar](55) NULL,
+	[Telefono] [nvarchar](30) NULL,
+	[EstadoCliente] [bit] NULL,
+ CONSTRAINT [PK_CLIENTE] PRIMARY KEY CLUSTERED 
+(
+	[IdCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[DETALLEFACTURA]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DETALLEFACTURA](
+	[IdDetalle] [int] IDENTITY(1,1) NOT NULL,
+	[CodFactura] [int] NULL,
+	[CodArticulo] [int] NULL,
+	[Cantidad] [int] NULL,
+	[PrecioTotal] [decimal](18, 0) NULL,
+ CONSTRAINT [PK_DETALLEFACTURA] PRIMARY KEY CLUSTERED 
+(
+	[IdDetalle] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[FACTURA]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FACTURA](
+	[IdFactura] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [datetime] NULL,
+	[CodResponsable] [int] NULL,
+	[CodCliente] [int] NULL,
+	[Total] [decimal](18, 0) NULL,
+	[Efectivo] [decimal](18, 0) NULL,
+	[Devuelta] [decimal](18, 0) NULL,
+	[EstadoFactura] [bit] NULL,
+ CONSTRAINT [PK_FACTURA] PRIMARY KEY CLUSTERED 
+(
+	[IdFactura] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[HISTORIAL]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HISTORIAL](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Usuario] [nvarchar](50) NULL,
+	[Fecha] [datetime] NULL,
+ CONSTRAINT [PK_HISTORIAL] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[USUARIOS]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[USUARIOS](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Dni] [nvarchar](50) NULL,
+	[Nombres] [nvarchar](50) NULL,
+	[Apellidos] [nvarchar](50) NULL,
+	[Cargo] [nvarchar](50) NULL,
+	[Email] [nvarchar](50) NULL,
+	[Contraseña] [nvarchar](50) NULL,
+	[EstadoUsuario] [bit] NULL,
+ CONSTRAINT [PK_EMPLEADOS] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET IDENTITY_INSERT [dbo].[ARTICULO] ON 
+
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (1, N'Chocorica mediana', CAST(40 AS Decimal(18, 0)), 17, 1)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (2, N'Coca Cola medio litro', CAST(30 AS Decimal(18, 0)), 24, 1)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (3, N'Tostadas', CAST(30 AS Decimal(18, 0)), 11, 1)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (4, N'Jugo Santal de Pera', CAST(75 AS Decimal(18, 0)), 10, 1)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (5, N'Jugo Rica Naranja 100%', CAST(95 AS Decimal(18, 0)), 12, 0)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (6, N'Papas Lays Clasicas Medinas 87 GR', CAST(70 AS Decimal(18, 0)), 12, 0)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (7, N'Galletas Hatuey Soda', CAST(12 AS Decimal(18, 0)), 36, 0)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (8, N'Bizcocho muffin', CAST(50 AS Decimal(18, 0)), 4, 1)
+GO
+INSERT [dbo].[ARTICULO] ([IdArticulo], [Descripcion], [Precio], [Stock], [Estado]) VALUES (9, N'Refresco Sprite 20 Oz', CAST(35 AS Decimal(18, 0)), 15, 1)
+GO
+SET IDENTITY_INSERT [dbo].[ARTICULO] OFF
+GO
+SET IDENTITY_INSERT [dbo].[CLIENTE] ON 
+
+GO
+INSERT [dbo].[CLIENTE] ([IdCliente], [NombreCompleto], [Direccion], [Telefono], [EstadoCliente]) VALUES (1, N'Victor Gomez', N'Casa 20', N'(849) 345-6787', 1)
+GO
+INSERT [dbo].[CLIENTE] ([IdCliente], [NombreCompleto], [Direccion], [Telefono], [EstadoCliente]) VALUES (2, N'Rafael Genao', N'Casa 49', N'(809) 567-8956', 1)
+GO
+INSERT [dbo].[CLIENTE] ([IdCliente], [NombreCompleto], [Direccion], [Telefono], [EstadoCliente]) VALUES (4, N'Lorenzo Mateo', N'Casa 28', N'(809) 234-5566', 0)
+GO
+INSERT [dbo].[CLIENTE] ([IdCliente], [NombreCompleto], [Direccion], [Telefono], [EstadoCliente]) VALUES (5, N'Pedro Mateo', N'Caso 23', N'(809) 456-7778', 1)
+GO
+SET IDENTITY_INSERT [dbo].[CLIENTE] OFF
+GO
+SET IDENTITY_INSERT [dbo].[DETALLEFACTURA] ON 
+
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (1, 1, 1, 2, CAST(80 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (2, 7, 4, 4, CAST(75 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (3, 7, 3, 8, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (4, 8, 2, 2, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (5, 8, 7, 20, CAST(12 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (6, 8, 5, 4, CAST(95 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (7, 8, 3, 8, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (8, 9, 3, 2, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (9, 9, 5, 3, CAST(95 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (10, 10, 2, 23, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (11, 11, 5, 2, CAST(95 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (12, 11, 3, 5, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (13, 11, 2, 5, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (14, 12, 1, 10, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (15, 13, 3, 7, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (16, 14, 4, 2, CAST(75 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (17, 15, 2, 1, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (19, 12, 1, 1, CAST(46 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (21, 1, 1, 1, CAST(20 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (22, 18, 1, 1, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (23, 20, 1, 1, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (24, 21, 1, 1, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (28, 24, 1, 1, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (31, 11, 1, 1, CAST(20 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (34, 11, 2, 1, CAST(20 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (35, 26, 1, 1, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (36, 26, 2, 1, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (37, 26, 3, 1, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (38, 27, 3, 5, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (39, 27, 4, 2, CAST(75 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (40, 28, 8, 2, CAST(50 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (41, 28, 4, 1, CAST(75 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (42, 28, 8, 3, CAST(50 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (43, 29, 4, 2, CAST(75 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (44, 29, 3, 4, CAST(30 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (45, 30, 1, 1, CAST(40 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (49, 34, 8, 1, CAST(50 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (50, 35, 8, 2, CAST(50 AS Decimal(18, 0)))
+GO
+INSERT [dbo].[DETALLEFACTURA] ([IdDetalle], [CodFactura], [CodArticulo], [Cantidad], [PrecioTotal]) VALUES (51, 35, 4, 2, CAST(75 AS Decimal(18, 0)))
+GO
+SET IDENTITY_INSERT [dbo].[DETALLEFACTURA] OFF
+GO
+SET IDENTITY_INSERT [dbo].[FACTURA] ON 
+
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (1, CAST(N'2021-09-01 00:00:00.000' AS DateTime), 1, 1, CAST(1200 AS Decimal(18, 0)), CAST(1500 AS Decimal(18, 0)), CAST(300 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (2, CAST(N'2021-09-03 00:00:00.000' AS DateTime), 1, 1, CAST(2000 AS Decimal(18, 0)), CAST(2000 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (3, CAST(N'2021-09-03 00:00:00.000' AS DateTime), 1, 1, CAST(1500 AS Decimal(18, 0)), CAST(1500 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (4, CAST(N'2021-09-04 00:00:00.000' AS DateTime), 1, 1, CAST(1230 AS Decimal(18, 0)), CAST(1300 AS Decimal(18, 0)), CAST(70 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (5, CAST(N'2021-09-04 00:00:00.000' AS DateTime), 1, 1, CAST(2200 AS Decimal(18, 0)), CAST(2200 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (6, CAST(N'2021-09-05 00:00:00.000' AS DateTime), 1, 1, CAST(2600 AS Decimal(18, 0)), CAST(2700 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (7, CAST(N'2021-09-07 00:00:00.000' AS DateTime), 1, 1, CAST(540 AS Decimal(18, 0)), CAST(550 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (8, CAST(N'2021-09-07 00:00:00.000' AS DateTime), 1, 2, CAST(920 AS Decimal(18, 0)), CAST(1000 AS Decimal(18, 0)), CAST(80 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (9, CAST(N'2021-09-07 00:00:00.000' AS DateTime), 1, 2, CAST(345 AS Decimal(18, 0)), CAST(400 AS Decimal(18, 0)), CAST(55 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (10, CAST(N'2021-09-07 00:00:00.000' AS DateTime), 1, 1, CAST(690 AS Decimal(18, 0)), CAST(700 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (11, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(490 AS Decimal(18, 0)), CAST(500 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (12, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(400 AS Decimal(18, 0)), CAST(400 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (13, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(210 AS Decimal(18, 0)), CAST(300 AS Decimal(18, 0)), CAST(90 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (14, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(150 AS Decimal(18, 0)), CAST(200 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (15, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(30 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(20 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (16, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(80 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), CAST(20 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (17, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(30 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(20 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (18, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(40 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), CAST(60 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (19, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(40 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (20, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(40 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (21, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(70 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), CAST(30 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (22, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(30 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(20 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (23, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(30 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(20 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (24, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(40 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (25, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(30 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(20 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (26, CAST(N'2021-09-08 00:00:00.000' AS DateTime), 1, 1, CAST(100 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (27, CAST(N'2021-09-11 00:00:00.000' AS DateTime), 1, 2, CAST(300 AS Decimal(18, 0)), CAST(300 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (28, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(100 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (29, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 5, CAST(270 AS Decimal(18, 0)), CAST(270 AS Decimal(18, 0)), CAST(0 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (30, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(40 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), CAST(10 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (31, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(300 AS Decimal(18, 0)), CAST(500 AS Decimal(18, 0)), CAST(200 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (32, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(300 AS Decimal(18, 0)), CAST(500 AS Decimal(18, 0)), CAST(200 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (33, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(300 AS Decimal(18, 0)), CAST(500 AS Decimal(18, 0)), CAST(200 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (34, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(50 AS Decimal(18, 0)), CAST(100 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), 1)
+GO
+INSERT [dbo].[FACTURA] ([IdFactura], [Fecha], [CodResponsable], [CodCliente], [Total], [Efectivo], [Devuelta], [EstadoFactura]) VALUES (35, CAST(N'2021-09-12 00:00:00.000' AS DateTime), 1, 1, CAST(250 AS Decimal(18, 0)), CAST(300 AS Decimal(18, 0)), CAST(50 AS Decimal(18, 0)), 0)
+GO
+SET IDENTITY_INSERT [dbo].[FACTURA] OFF
+GO
+SET IDENTITY_INSERT [dbo].[HISTORIAL] ON 
+
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (1, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-04 17:15:16.273' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (2, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-04 18:57:58.517' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (3, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-04 19:14:34.000' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (4, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-04 20:25:30.680' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (5, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-04 20:55:43.147' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (6, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-04 21:05:39.810' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (7, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-11 22:52:00.413' AS DateTime))
+GO
+INSERT [dbo].[HISTORIAL] ([Id], [Usuario], [Fecha]) VALUES (8, N'WINDOWS-C86J0N0\yerlin022', CAST(N'2021-09-12 11:39:07.337' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[HISTORIAL] OFF
+GO
+SET IDENTITY_INSERT [dbo].[USUARIOS] ON 
+
+GO
+INSERT [dbo].[USUARIOS] ([Id], [Dni], [Nombres], [Apellidos], [Cargo], [Email], [Contraseña], [EstadoUsuario]) VALUES (1, N'20160753', N'Piter', N'Marte', N'Admin', N'piter02@gmail.com', N'clave1', 1)
+GO
+INSERT [dbo].[USUARIOS] ([Id], [Dni], [Nombres], [Apellidos], [Cargo], [Email], [Contraseña], [EstadoUsuario]) VALUES (2, N'402150324567', N'Juan', N'Vargas', N'Vendedor', N'juanVargas34@gmail.com', N'clave2', 1)
+GO
+INSERT [dbo].[USUARIOS] ([Id], [Dni], [Nombres], [Apellidos], [Cargo], [Email], [Contraseña], [EstadoUsuario]) VALUES (3, N'202005102', N'Manuel', N'Hernandez', N'Vendedor', N'manuel45@gmail.com', N'clave3', 0)
+GO
+SET IDENTITY_INSERT [dbo].[USUARIOS] OFF
+GO
+ALTER TABLE [dbo].[DETALLEFACTURA]  WITH CHECK ADD  CONSTRAINT [FK_DETALLEFACTURA_ARTICULO] FOREIGN KEY([CodArticulo])
+REFERENCES [dbo].[ARTICULO] ([IdArticulo])
+GO
+ALTER TABLE [dbo].[DETALLEFACTURA] CHECK CONSTRAINT [FK_DETALLEFACTURA_ARTICULO]
+GO
+ALTER TABLE [dbo].[DETALLEFACTURA]  WITH CHECK ADD  CONSTRAINT [FK_DETALLEFACTURA_FACTURA] FOREIGN KEY([CodFactura])
+REFERENCES [dbo].[FACTURA] ([IdFactura])
+GO
+ALTER TABLE [dbo].[DETALLEFACTURA] CHECK CONSTRAINT [FK_DETALLEFACTURA_FACTURA]
+GO
+ALTER TABLE [dbo].[FACTURA]  WITH CHECK ADD  CONSTRAINT [FK_FACTURA_CLIENTE] FOREIGN KEY([CodCliente])
+REFERENCES [dbo].[CLIENTE] ([IdCliente])
+GO
+ALTER TABLE [dbo].[FACTURA] CHECK CONSTRAINT [FK_FACTURA_CLIENTE]
+GO
+ALTER TABLE [dbo].[FACTURA]  WITH CHECK ADD  CONSTRAINT [FK_FACTURA_USUARIOS] FOREIGN KEY([CodResponsable])
+REFERENCES [dbo].[USUARIOS] ([Id])
+GO
+ALTER TABLE [dbo].[FACTURA] CHECK CONSTRAINT [FK_FACTURA_USUARIOS]
+GO
+/****** Object:  StoredProcedure [dbo].[SpCambiarEstadoArticulo]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpCambiarEstadoArticulo](
+
+  @IdArticulo int,
+ 
+  @Estado bit)
+AS 
+
+UPDATE ARTICULO SET Estado=@Estado WHERE IdArticulo =@IdArticulo
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpCambiarEstadoCliente]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpCambiarEstadoCliente](
+
+  @IdCliente int,
+ 
+  @EstadoCliente bit)
+AS 
+
+UPDATE CLIENTE SET EstadoCliente=@EstadoCliente WHERE IdCliente =@IdCliente
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpCambiarEstadoFactura]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpCambiarEstadoFactura](
+
+  @IdFactura int,
+ 
+  @EstadoFactura bit)
+AS 
+
+UPDATE FACTURA SET EstadoFactura=@EstadoFactura WHERE IdFactura =@IdFactura
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpCambiarEstadoUsuario]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpCambiarEstadoUsuario](
+
+  @Id int,
+ 
+  @EstadoUsuario bit)
+AS 
+
+UPDATE USUARIOS SET EstadoUsuario=@EstadoUsuario WHERE Id =@Id
+GO
+/****** Object:  StoredProcedure [dbo].[SpEditarArticulo]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEditarArticulo](
+
+  @IdArticulo int,
+  @Descripcion varchar(50) NULL,
+  @Precio decimal(18,0) NULL,
+  @Stock int NULL,
+  @Estado bit)
+AS 
+
+UPDATE ARTICULO SET Descripcion = @Descripcion, Precio =@Precio, 
+Stock= @Stock,Estado=@Estado WHERE IdArticulo =@IdArticulo
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpEditarCliente]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEditarCliente](
+
+ @IdCliente int,
+ @NombreCompleto NVARCHAR(30),
+ @Direccion NVARCHAR(30),
+ @Telefono NVARCHAR(30)
+)
+
+AS
+
+UPDATE CLIENTE SET NombreCompleto=@NombreCompleto,Direccion=@Direccion,Telefono=@Telefono WHERE IdCliente=@IdCliente
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpEditarFactura]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEditarFactura](
+
+ @IdFactura int,
+ @Fecha datetime,
+ @CodResponsable int,
+ @CodCliente int,
+ @Total decimal(18,0))
+ 
+ AS
+ 
+ UPDATE FACTURA SET Fecha = @Fecha, CodResponsable = @CodResponsable, CodCliente= @CodCliente,Total= @Total  WHERE IdFactura =@IdFactura
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpEditarUsuarios]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEditarUsuarios](
+
+ @Id int,
+ @Dni NVARCHAR(30),
+ @Nombre NVARCHAR(30),
+ @Apellido NVARCHAR(30),
+ @Cargo NVARCHAR(30),
+ @Email NVARCHAR(30),
+ @Contraseña NVARCHAR(30))
+AS
+
+ UPDATE USUARIOS SET Dni=@Dni, Nombres=@Nombre, Apellidos=@Apellido, 
+ Cargo=@Cargo,Email=@Email,Contraseña=@Contraseña WHERE Id =@Id
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpEliminarArticulo]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEliminarArticulo](
+
+@IdCliente int
+)
+
+AS
+
+DELETE FROM CLIENTE WHERE IdCliente =@IdCliente
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpEliminarCliente]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEliminarCliente](
+
+@IdCliente int
+)
+
+AS
+
+DELETE FROM CLIENTE WHERE IdCliente =@IdCliente
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpEliminarUsuarios]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpEliminarUsuarios](
+
+@Id int
+)
+
+AS
+
+DELETE FROM USUARIOS WHERE Id =@Id
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpInsertarArticulo]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpInsertarArticulo](
+
+  @Descripcion varchar(50) NULL,
+  @Precio decimal(18,0) NULL,
+  @Stock int NULL,
+  @Estado bit)
+AS 
+
+INSERT INTO ARTICULO(Descripcion,Precio,Stock,Estado) 
+            VALUES(@Descripcion,@Precio,@Stock,@Estado)
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpInsertarCliente]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpInsertarCliente](
+
+ @NombreCompleto NVARCHAR(30),
+ @Direccion NVARCHAR(30),
+ @Telefono NVARCHAR(30),
+ @EstadoCliente bit
+)
+
+AS
+
+INSERT INTO CLIENTE VALUES(@NombreCompleto,@Direccion,@Telefono,@EstadoCliente)
+GO
+/****** Object:  StoredProcedure [dbo].[SpInsertarDetalleFactura]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROC [dbo].[SpInsertarDetalleFactura](
+
+ @CodFactura int,
+ @CodArticulo int,
+ @Cantidad int,
+ @PrecioTotal decimal(18,0)
+ )
+
+ AS
+ 
+ INSERT INTO DETALLEFACTURA VALUES(@CodFactura,@CodArticulo,@Cantidad,@PrecioTotal)
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpInsertarFacturas]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpInsertarFacturas](
+
+ @Fecha datetime,
+ @CodResponsable int,
+ @CodCliente int,
+ @Total decimal(18,0),
+ @Efectivo decimal(18,0),
+ @Devuelta decimal(18,0),
+ @EstadoFactura bit
+ )
+
+ AS
+ 
+ INSERT INTO FACTURA VALUES(@Fecha,@CodResponsable, @CodCliente,@Total,@Efectivo,@Devuelta,@EstadoFactura)
+GO
+/****** Object:  StoredProcedure [dbo].[SpInsertarUsuarios]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpInsertarUsuarios](
+
+ @Dni NVARCHAR(30),
+ @Nombre NVARCHAR(30),
+ @Apellido NVARCHAR(30),
+ @Cargo NVARCHAR(30),
+ @Email NVARCHAR(30),
+ @Contraseña NVARCHAR(30),
+ @EstadoUsuario bit)
+ AS
+ if(not exists(select Dni FROM USUARIOS where  Dni=@Dni ))
+ INSERT INTO USUARIOS VALUES(@Dni, @Nombre,@Apellido,@Cargo,@Email,@Contraseña,@EstadoUsuario)
+GO
+/****** Object:  StoredProcedure [dbo].[SpListarArticulos]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpListarArticulos]
+
+AS
+SELECT IdArticulo, Descripcion,Precio, Stock, Estado FROM ARTICULO WHERE Estado=1
+GO
+/****** Object:  StoredProcedure [dbo].[SpListarCliente]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpListarCliente]
+
+AS
+
+SELECT IdCliente, NombreCompleto, Direccion, Telefono, EstadoCliente FROM CLIENTE WHERE EstadoCliente=1
+GO
+/****** Object:  StoredProcedure [dbo].[SpListarDetalleFactura]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpListarDetalleFactura]
+
+AS
+SELECT D.IdDetalle, D.CodFactura, A.Descripcion,A.Precio, D.Cantidad, D.PrecioTotal FROM DETALLEFACTURA AS D
+
+INNER JOIN FACTURA AS F ON F.IdFactura = D.CodFactura
+INNER JOIN ARTICULO AS A ON A.IdArticulo = D.CodArticulo
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpListarFactura]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpListarFactura]
+
+AS
+
+SELECT F.IdFactura, F.Fecha, U.Nombres AS Vendedor,C.NombreCompleto AS NombreCliente, F.Total,F.Efectivo,F.Devuelta,F.EstadoFactura FROM FACTURA AS F
+
+INNER JOIN USUARIOS AS U ON U.Id = F.CodResponsable 
+INNER JOIN CLIENTE AS C ON C.IdCliente = F.CodCliente WHERE F.EstadoFactura =1
+GO
+/****** Object:  StoredProcedure [dbo].[SpListarUsuarios]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpListarUsuarios]
+
+AS
+
+SELECT Id, Dni, Nombres, Apellidos, Cargo, Email, Contraseña, EstadoUsuario FROM USUARIOS WHERE EstadoUsuario=1
+GO
+/****** Object:  StoredProcedure [dbo].[SpLogin]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[SpLogin] 
+    @Usuario nvarchar(50), 
+    @Password nvarchar(50) 
+AS 
+    SELECT * FROM USUARIOS
+    WHERE Dni = @Usuario AND Contraseña = @Password;
+
+GO
+/****** Object:  StoredProcedure [dbo].[SpObtenerDatosArticulo]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpObtenerDatosArticulo](
+
+
+  @IdArticulo int
+
+)
+
+AS
+
+SELECT IdArticulo, Descripcion,Precio, Stock, 
+Estado FROM ARTICULO WHERE IdArticulo = @IdArticulo
+GO
+/****** Object:  StoredProcedure [dbo].[SpObtenerIdUltimoRegistro]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[SpObtenerIdUltimoRegistro]
+AS
+
+SELECT * FROM FACTURA WHERE IdFactura = (SELECT MAX(IdFactura) FROM FACTURA)
+GO
+/****** Object:  Trigger [dbo].[DisHistorialArticulosRegistrados]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TRIGGER [dbo].[DisHistorialArticulosRegistrados]
+
+on [dbo].[ARTICULO]
+  for insert
+  as
+   
+  begin
+  SET NOCOUNT ON
+
+  INSERT INTO HISTORIAL VALUES(SYSTEM_USER,GETDATE());
+
+  end
+
+
+GO
+/****** Object:  Trigger [dbo].[DIS_DETALLEFACTURA]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ CREATE trigger [dbo].[DIS_DETALLEFACTURA]
+  on [dbo].[DETALLEFACTURA]
+  for insert
+  as
+   SET NOCOUNT ON
+   declare @stock int
+   select @stock= Stock from ARTICULO
+		 join inserted
+		 on inserted.CodArticulo=ARTICULO.IdArticulo
+		 where ARTICULO.IdArticulo=inserted.CodArticulo
+  if (@stock>=(select Cantidad from inserted))
+    UPDATE ARTICULO set Stock=Stock-inserted.Cantidad
+     from ARTICULO
+     join inserted
+     on inserted.CodArticulo=ARTICULO.IdArticulo
+     where IdArticulo=inserted.CodArticulo
+  else
+  begin
+    raiserror ('Hay menos articulos en stock de los solicitados para la venta', 16, 1)
+    rollback transaction
+  end
+GO
+/****** Object:  Trigger [dbo].[TG_RestaurarArticulo]    Script Date: 9/12/2021 4:50:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE trigger [dbo].[TG_RestaurarArticulo] ON [dbo].[FACTURA]
+   AFTER UPDATE AS
+   BEGIN
+   SET NOCOUNT ON
+   declare @cantidad int
+     select @cantidad= Cantidad from DETALLEFACTURA
+		 join inserted
+		 on inserted.IdFactura=DETALLEFACTURA.CodFactura
+		 where DETALLEFACTURA.CodFactura=inserted.IdFactura and inserted.EstadoFactura = 0
+  
+
+    UPDATE ARTICULO set Stock=Stock+ @cantidad
+     from ARTICULO
+	 INNER JOIN DETALLEFACTURA ON DETALLEFACTURA.CodArticulo = ARTICULO.IdArticulo
+     join inserted
+     on inserted.IdFactura=DETALLEFACTURA.CodFactura 
+     where CodFactura=inserted.IdFactura
+
+   END
+GO
+USE [master]
+GO
+ALTER DATABASE [DBCAFETERIA] SET  READ_WRITE 
+GO

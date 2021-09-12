@@ -1,0 +1,15 @@
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\bin\Release\net5.0\CapaNegocio.deps.json
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\bin\Release\net5.0\CapaNegocio.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\bin\Release\net5.0\ref\CapaNegocio.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\bin\Release\net5.0\CapaNegocio.pdb
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\bin\Release\net5.0\CapaDatos.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\bin\Release\net5.0\CapaDatos.pdb
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.csproj.AssemblyReference.cache
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.AssemblyInfoInputs.cache
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.AssemblyInfo.cs
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.csproj.CoreCompileInputs.cache
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.csproj.CopyComplete
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\ref\CapaNegocio.dll
+C:\Users\yerlin022\source\repos\CafeteriaMarteSistema\CapaNegocio\obj\Release\net5.0\CapaNegocio.pdb
